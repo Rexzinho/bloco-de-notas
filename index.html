@@ -1,139 +1,68 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>My Website</title>
-      <link rel="icon" type="image/x-icon" href="style/images/icone.ico">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="./style/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloco de Notas de Notas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
-</head>
-<body class="body-bg">
-      <nav class="navbar navbar-expand-md py-5">
-            <div class="container">
-                  <a href="https://www.luiztools.com.br/curso-nodejs?utm_source=blog&utm_medium=link&utm_campaign=auto&utm_content=#conteudo" class="navbar-brand">
-                        <img src="./style/images/Logo.png" alt="img">
-                  </a>
-                  <button class="navbar-toggler invert-color" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-label="Expand Navegation">
-                        <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse my-nav" id="nav">
-                        <ul class="navbar-nav">
-                              <li class="navbar-item">
-                                    <a href="#" class="nav-link page-selected px-4"><strong><u>Início</u></strong></a>
-                              </li>
-                              <li class="navbar-item">
-                                    <a href="#" class="nav-link my-nav-item px-4"><strong>Conteúdo</strong></a>
-                              </li>
-                              <li class="navbar-item">
-                                    <a href="#" class="nav-link my-nav-item px-4"><strong>Inscrição</strong></a>
-                              </li>
-                              <li class="navbar-item">
-                                    <a href="#" class="nav-link my-nav-item px-4"><strong>Dúvidas</strong></a>
-                              </li>
-                        </ul>
+<body>
+      <header>
+            <div id="logo"><img src="./images/bn.png" /></div>
+            <div id="display"></div>
+            <div id="user"></div>
+      </header>
+      <msgs></msgs>
+      <main>
+            <div id="controls">
+                  <div id="add-note">
+                        <a href="" >
+                        <i class="bi bi-plus-square-fill" style="font-size: 2rem;"></i>
+                        </a>
                   </div>
             </div>
-      </nav>
-      <div class="container-fluid">
-            <div class="container">
-                  <div class="row p-big">
-                        <div class="col-lg-6">
-                              <h1 class="myTitle poppins text-light">Curso Node.js e MongoDB</h1>
-                              <p class="lead text-orange mr-3 pr-3"><strong>Aprenda a desenvolver suas primeiras aplicações web e web APIs usando as tecnologias que mais crescem no mercado!</strong></p>
-                              <p class="lead text-orange mb-5 pr-3"><strong>Dê um start na sua carreira ou atualize-se, se tornando um desenvolvedor Node.js!</strong></p>
-                              <div class="row">
-                                    <div class="col-5">
-                                          <button class="btn text-light orange-btn"><strong>Ver Preço e Inscrição</strong></button>
-                                    </div>
-                                    <div class="col-7">
-                                          <p class="text-orange"><strong>Curso atualizado 2023, prático, com certificado e suporte online</strong>.</p>
-                                    </div>
-                              </div>
+            <div id="notes"> </div>
+
+            <div id="modal-view">
+                  <div id="close-modal">
+                        <a href="" >
+                        <i class="bi bi-x-square" ></i>
+                        </a>
+                  </div>
+                  <div id="title-note"> </div>
+                  <div id="content-note"> </div>
+                  <div id="controls-note"> </div>
+            </div>
+
+            <div id="modal">
+                  <div class="mb-3" style="border-bottom: 1px solid #999; display:flex; justify-content: space-between;">
+                        <div>
+                              <a href="" id="btn-save-note">
+                              <i class="bi bi-save" ></i>
+                              </a>
                         </div>
-                        <div class="col-lg-6 mt-5 mt-lg-auto">
-                              <img src="style/images/video.png" class="img-fluid" alt="video">
+                        <div>
+                              <a href="" style="color:#999" id="btn-close-note">
+                              <i class="bi bi-x-square" ></i>
+                              </a>
                         </div>
                   </div>
-                  <div class="row py-3">
-                        <h3 class="h6 text-dark-orange">TORNE-SE UM DESENVOLVEDOR DE APLICAÇÕES</h3>
-                        <h2 class="h1 poppins text-light py-2 ">Node.js e MongoDB</h2>
-                        <p class="h5 text-orange">JavaScript é hoje a linguagem de programação mais popular do mundo. Aliada à plataforma Node.js e ao banco de dados MongoDB, você desenvolve end-to-end com apenas uma linguagem de programação.</p>
+                  <input type="hidden" id="input-id" >
+                  <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="input-title" placeholder="Title">
+                  </div>
+                  <div class="mb-3">
+                        <label for="content" class="form-label">Notes</label>
+                        <textarea class="form-control" id="input-content" rows="4"></textarea>
                   </div>
             </div>
-            <div class="container">
-                  <div class="row my-5">
-                        <div class="col-lg-4 col-md-6 mt-3 px-2">
-                              <div class="card my-card-border my-card-bg text-light h-100">
-                                    <div class="gray-circle m-4">
-                                          <img src="style/images/node.png" class="card-img-top my-card-img p-4" alt="node logo">
-                                    </div>
-                                    <div class="card-body m-2">
-                                    <h5 class="card-title h4">Node.js</h5>
-                                    <p class="card-text text-orange">Uma plataforma que permite criar aplicações utilizando arquiteturas modernas e escaláveis.</p>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mt-3 px-2">
-                              <div class="card my-card-border my-card-bg text-light h-100">
-                                    <div class="gray-circle m-4">
-                                          <img src="style/images/mango.png" class="card-img-top my-card-img p-4" alt="node logo">
-                                    </div>
-                                    <div class="card-body m-2">
-                                    <h5 class="card-title h4">MongoDB</h5>
-                                    <p class="card-text text-orange">Simplesmente o banco de dados mais prático para você aprender a construir aplicações reais com Node.js.</p>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mt-3 px-2">
-                              <div class="card  my-card-border my-card-bg text-light h-100">
-                                    <div class="gray-circle m-4">
-                                          <img src="style/images/expressJS.png" class="card-img-top my-card-img p-4" alt="node logo">
-                                    </div>
-                                    <div class="card-body m-2">
-                                    <h5 class="card-title h4">ExpressJS</h5>
-                                    <p class="card-text text-orange">O framework web para Node.js mais utilizado no mundo, por empresas de todos os tamanhos.</p>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mt-3 px-2">
-                              <div class="card my-card-border my-card-bg text-light h-100">
-                                    <div class="gray-circle m-4">
-                                          <img src="style/images/microservices.png" class="card-img-top my-card-img p-4" alt="node logo">
-                                    </div>
-                                    <div class="card-body m-2 ">
-                                    <h5 class="card-title h4">Microservices</h5>
-                                    <p class="card-text text-orange">A arquitetura de software #1 atualmente quando o assunto é aplicações distribuídas e escaláveis.</p>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mt-3 px-2">
-                              <div class="card my-card-border my-card-bg text-light h-100">
-                                    <div class="gray-circle m-4">
-                                          <img src="style/images/AmazonAWS.png" class="card-img-top my-card-img p-4" alt="node logo">
-                                    </div>
-                                    <div class="card-body m-2">
-                                    <h5 class="card-title h4">Amazon AWS</h5>
-                                    <p class="card-text text-orange">Não basta desenvolver, você tem de saber como subir a sua aplicação em produção. Que tal na Amazon AWS?</p>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mt-3 px-2">
-                              <div class="card my-card-border my-card-bg text-light h-100">
-                                    <div class="gray-circle m-4">
-                                          <p class="h2">🙌🏻</p>
-                                    </div>
-                                    <div class="card-body m-2">
-                                    <h5 class="card-title h4">E muito mais!</h5>
-                                    <p class="card-text text-orange fs-6">Você aprenderá de maneira prática a usar os principais pacotes e técnicas do mercado.</p>
-                                    </div>
-                              </div>
-                        </div>
-                  </div>
-            </div>
-      </div>
+      </main> 
+      
+      <footer></footer>
             
+    <script src="./script/script.js"></script>
 </body>
 </html>
