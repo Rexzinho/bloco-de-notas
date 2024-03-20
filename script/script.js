@@ -76,4 +76,64 @@ const loadNotes = () => {
       }
 
    return notes;
+
 }
+
+const listNotes = () => {
+
+   let listNotes = localStorage.getItem("notes");
+   listNotes = JSON.parse(listNotes);
+
+   listNotes.forEach((item) => {
+
+      const divCard = document.createElement("div");
+      divCard.classList = "card";
+      divCard.style.width = "18rem";
+
+      const divCardBody = document.createElement("div");
+      divCardBody.classList = "card-body";
+
+      const h1 = document.createElement("h1");
+      h1.innerText = item.title;
+
+      const content = document.createElement("p");
+      content.classList = "card-text";
+      content.innerText = item.content;
+
+      const displayLastTime = document.createElement("p");
+      displayLastTime.classList = "card-text";
+      let lastTime = new Date(item.lastTime);
+      lastTime = lastTime.toLocaleDateString("PT-Br");
+      displayLastTime.innerText = "Última edição: " + lastTime;
+
+      divCardBody.appendChild(h1);
+      divCardBody.appendChild(content);
+      divCardBody.appendChild(displayLastTime);
+      divCard.append(divCardBody);
+      notes.appendChild(divCard);
+
+      divCard.addEventListener("click", () => showNote(item));
+
+   });
+}
+
+const showNote = (note) => {
+   notes.style.display = "none";
+   addNote.style.display = "none";
+   modalView.style.display = "block";
+
+   document.querySelector("#title-note").innerHTML = `<h1>${note.title}</h1>`;
+   document.querySelector("#content-note").innerHTML = `<p>${note.content}</p>`;
+
+   let lastTime = new Date(note.lastTime);
+   lastTime = lastTime.toLocaleDateString("PT-Br");
+
+   document.querySelector("#content-note").innerHTML += `<p>${lastTime}</p>`;
+}
+
+closeModal.addEventListener("click", () => {
+   evt.preventDefault();
+})
+
+
+listNotes();
