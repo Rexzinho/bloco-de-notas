@@ -7,6 +7,7 @@ const closeModal =  document.querySelector('#close-modal'); //fechar janela moda
 const modal = document.querySelector('#modal'); //Modal para edição das notas
 const modalView = document.querySelector('#modal-view'); //Modal para exibição dos detalhes da nota
 const notes = document.querySelector('#notes');//Lista divs com dados das notas
+const colorInput = document.querySelector("#input-color");
 const btnSaveNote = document.querySelector("#btn-save-note"); //icone para salvar nota
 const btnCloseNote = document.querySelector("#btn-close-note");//icone para fechar modal de edição de nota.
 const btnEditNote = document.querySelector("#btn-edit-note");
@@ -23,13 +24,19 @@ addNote.addEventListener("click", (evt) => {
    addNote.style.display = "none";
 });
 
+colorInput.addEventListener("input", () => {
+   document.querySelector("#input-title").style.color = colorInput.value;
+})
+
 btnCloseNote.addEventListener("click", (evt) => {
    evt.preventDefault();
    notes.style.display = "flex";
    modal.style.display = "none";
    addNote.style.display = "block";
    document.querySelector("#input-id").value = "";
+   colorInput.value = "#000000";
    document.querySelector("#input-title").value = "";
+   document.querySelector("#input-title").style.color = "#000000";
    document.querySelector("#input-content").value = "";
    listNotes();
 })
@@ -39,6 +46,7 @@ btnSaveNote.addEventListener("click", (evt) => {
    let data = {
        id: document.querySelector("#input-id").value,
        title: document.querySelector("#input-title").value,
+       titleColor: colorInput.value,
        content: document.querySelector("#input-content").value
    }
    saveNote(data);
@@ -46,26 +54,24 @@ btnSaveNote.addEventListener("click", (evt) => {
 
 btnEditNote.addEventListener("click", (evt) => {
 
-  let notes = loadNotes();
-
   evt.preventDefault();
   evt.preventDefault();
   modal.style.display = "block";
   modalView.style.display = "none";
   addNote.style.display = "none";
 
+  let notes = loadNotes();
   let id = Number(document.querySelector("#input-id").value);
-  let note;
 
-  notes.forEach((item, i) => {
+  notes.forEach(item => {
      if(item.id == id){
-        note = item;
+      document.querySelector("#input-id").value = id;
+      document.querySelector("#input-title").value = item.title;
+      document.querySelector("#input-title").style.color = item.titleColor;
+      colorInput.value = item.titleColor;
+      document.querySelector("#input-content").value = item.content;
      }
   });
-
-  document.querySelector("#input-id").value = id;
-  document.querySelector("#input-title").value = note.title;
-  document.querySelector("#input-content").value = note.content;
 
 });
 
@@ -75,13 +81,6 @@ btnDeleteNote.addEventListener("click", (evt) => {
 
   let notes = loadNotes();
   let id = Number(document.querySelector("#input-id").value);
-  let deleteIndex;
-
-  notes.forEach((item, index) => {
-      if(item.id == id){
-        deleteIndex = index;
-      }
-  });
 
   notes = notes.filter(element => element.id != id);
 
@@ -144,18 +143,22 @@ const listNotes = () => {
   listNotes = JSON.parse(listNotes);
 
   notes.innerHTML = "";
+  let position = 0;
 
   listNotes.forEach((item) => {
 
+      const colCard = document.createElement("div");
+      colCard.classList = "col-lg-3 col-md-4 col-sm-6 mt-3 px-2";
+
      const divCard = document.createElement("div");
-     divCard.classList = "card";
-     divCard.style.width = "18rem";
+     divCard.classList = "card h-100";
 
      const divCardBody = document.createElement("div");
      divCardBody.classList = "card-body";
 
      const h1 = document.createElement("h1");
      h1.innerText = item.title;
+     h1.style.color = item.titleColor;
 
      const content = document.createElement("p");
      content.classList = "card-text";
@@ -167,13 +170,37 @@ const listNotes = () => {
      lastTime = lastTime.toLocaleDateString("PT-Br");
      displayLastTime.innerText = "Última edição: " + lastTime;
 
+     const divCardFooter = document.createElement("div");
+     divCardFooter.classList = "card-footer";
+     
+     const noteBtns = document.createElement("div");
+
+     noteBtns.classList = "note-btns";
+     const leftBtn = document.createElement("i");
+     leftBtn.classList = "btn btn-outline-primary bi bi-arrow-left-short";
+     leftBtn.value = position;
+     leftBtn.addEventListener("click", (evt) => moveLeft(evt));
+
+     const rightBtn = document.createElement("i");
+     rightBtn.classList = "btn btn-outline-primary bi bi-arrow-right-short";
+     rightBtn.value = position;
+     rightBtn.addEventListener("click", (evt) => moveRight(evt));
+     
+     noteBtns.appendChild(leftBtn);
+     noteBtns.appendChild(rightBtn);
+     
+
      divCardBody.appendChild(h1);
      divCardBody.appendChild(content);
      divCardBody.appendChild(displayLastTime);
-     divCard.append(divCardBody);
-     notes.appendChild(divCard);
+     divCardFooter.appendChild(noteBtns);
+     divCard.appendChild(divCardBody);
+     divCard.appendChild(divCardFooter);
+     colCard.appendChild(divCard);
+     notes.appendChild(colCard);
 
-     divCard.addEventListener("click", () => showNote(item));
+     divCardBody.addEventListener("click", () => showNote(item));
+     position++;
 
   });
 }
@@ -183,7 +210,7 @@ const showNote = (note) => {
   addNote.style.display = "none";
   modalView.style.display = "block";
 
-  document.querySelector("#title-note").innerHTML = `<h1>${note.title}</h1>`;
+  document.querySelector("#title-note").innerHTML = `<h1 style="color: ${note.titleColor}">${note.title}</h1>`;
   document.querySelector("#content-note").innerHTML = `<p>${note.content}</p>`;
 
   let lastTime = new Date(note.lastTime);
@@ -204,6 +231,37 @@ const closeWindow = () => {
   addNote.style.display = "block";
   modalView.style.display = "none";
   notes.style.display = "flex";
+}
+
+const moveLeft = (evt) => {
+   
+   const i = evt.target.value;
+   let notes = loadNotes();
+
+   if(i != 0)
+      [notes[i], notes[i-1]] = [notes[i-1], notes[i]];
+     
+   notes = JSON.stringify(notes);
+   localStorage.setItem("notes", notes);
+
+   notes.innerHTML = "";
+   listNotes();
+
+}
+
+const moveRight = (evt) => {
+
+   const i = evt.target.value;
+   let notes = loadNotes();
+
+   if(i < notes.length-1)
+   [notes[i], notes[i+1]] = [notes[i+1], notes[i]];
+
+   notes = JSON.stringify(notes);
+   localStorage.setItem("notes", notes);
+
+   notes.innerHTML = "";
+   listNotes();
 }
 
 listNotes();

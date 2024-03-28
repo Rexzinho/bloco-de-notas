@@ -11,11 +11,32 @@
 </head>
 <body>
       <header>
-            <div id="logo"><img src="./css/images/bn.png" /></div>
+            <div id="logo"><img src="./css/images/bloco-de-notas.svg"/></div>
             <div id="display"></div>
             <div id="user"></div>
       </header>
       <msgs></msgs>
+    
+    <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                  Ao clicar em excluir, esta nota será deletada permanentemente.
+            </div>
+            <div class="modal-footer">
+                  <button id="btn-delete-note" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-trash"></i>
+                  </button>
+            </div>
+            </div>
+            </div>
+    </div>
+
       <main>
             <div id="controls">
                   <div id="add-note">
@@ -24,8 +45,8 @@
                         </a>
                   </div>
             </div>
-            <div id="notes"> </div>
-
+            <div class="row "id="notes">
+            </div>
             <div id="modal-view">
                   <div id="close-modal">
                         <a href="" >
@@ -35,23 +56,23 @@
                   <div id="title-note"> </div>
                   <div id="content-note"> </div>
                   <div id="controls-note"> </div>
-                  <div id="btn-edit-note">
-                        <a href="" >
-                        <i class="bi bi-pencil"></i>
-                        </a>
-                  </div>
-                  <div id="btn-delete-note">
-                        <a href="" >
-                        <i class="bi bi-trash"></i>
-                        </a>
+                  <div class="note-btns">
+                        <button id="btn-edit-note" class="btn btn-primary">
+                              <a href="" >
+                              <i class="bi bi-pencil text-light"></i>
+                              </a>
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"                data-bs-target="#exampleModal">
+                              <i class="bi bi-trash"></i>
+                        </button>
                   </div>
             </div>
 
             <div id="modal">
                   <div class="mb-3" style="border-bottom: 1px solid #999; display:flex; justify-content: space-between;">
                         <div>
-                              <a href="" id="btn-save-note">
-                              <i class="bi bi-save" ></i>
+                              <a href="">
+                              <i class="bi bi-save" id="btn-save-note"></i>
                               </a>
                         </div>
                         <div>
@@ -63,7 +84,11 @@
                   <input type="hidden" id="input-id" >
                   <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="input-title" placeholder="Title">
+                        <input type="text" class="form-control" id="input-title">
+                  </div>
+                  <div class="mb-3">
+                        <label class="form-label">Title Color</label>
+                        <input type="color" class="form-control form-control-color" id="input-color" placeholder="Title">
                   </div>
                   <div class="mb-3">
                         <label for="content" class="form-label">Notes</label>
@@ -73,7 +98,7 @@
       </main> 
       
       <footer></footer>
-            
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>      
     <script src="./script/script.js"></script>
 </body>
 </html>

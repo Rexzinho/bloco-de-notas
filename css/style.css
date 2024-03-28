@@ -29,11 +29,14 @@
       margin: 2vh 2vw;
       min-height: 80vh;
     }
+
+    header{
+      margin: 2vh 2vw;
+    }
     
     #notes{
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
     }
     
     .card a{
@@ -66,3 +69,10 @@
       gap:10px;
     }
     
+    .note-btns{
+      display:flex;
+    }
+
+    #btn-edit-note{
+      margin-right:15px;
+    }
