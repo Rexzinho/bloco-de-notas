@@ -81,6 +81,10 @@
       height: 2.5rem;
       margin-left:10px;
     }
+
+    .invert{
+      filter: invert(100%);
+    }
     
     .note-btns{
       display:flex;

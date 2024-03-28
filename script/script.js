@@ -281,10 +281,12 @@ const loadTheme = () => {
 
    if(theme == "dark"){
       document.documentElement.dataset.bsTheme = "dark";
+      document.querySelector("#logo").classList = "invert";
    }
    
    else if(theme == "light"){
       document.documentElement.dataset.bsTheme = "light";
+      document.querySelector("#logo").classList = "";
    }
    
 }
