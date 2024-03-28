@@ -64,9 +64,22 @@
       width: 90vw;
     }
     
+    #controls{
+      display:flex;
+      align-items: center;
+      min-height:50px;
+      margin:10px;
+    }
+
     #controls-note{
       display:flex;
       gap:10px;
+    }
+
+    #select-theme{
+      width:18rem;
+      height: 2.5rem;
+      margin-left:10px;
     }
     
     .note-btns{

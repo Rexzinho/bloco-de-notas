@@ -12,6 +12,7 @@ const btnSaveNote = document.querySelector("#btn-save-note"); //icone para salva
 const btnCloseNote = document.querySelector("#btn-close-note");//icone para fechar modal de edição de nota.
 const btnEditNote = document.querySelector("#btn-edit-note");
 const btnDeleteNote = document.querySelector("#btn-delete-note");
+const selectTheme = document.querySelector("#select-theme");
 
 /**
 * ===================== EVENTOS  =======================
@@ -221,8 +222,12 @@ const showNote = (note) => {
   document.querySelector("#input-id").value = note.id;
 }
 
-closeModal.addEventListener("click", () => {
-  evt.preventDefault();
+closeModal.addEventListener("click", (evt) => {
+   evt.preventDefault();
+  modalView.style.display = "none";
+  addNote.style.display = "block";
+  notes.style.display = "flex";
+  listNotes();
 })
 
 
@@ -264,4 +269,25 @@ const moveRight = (evt) => {
    listNotes();
 }
 
+selectTheme.addEventListener("change", (evt) => {
+   localStorage.setItem("theme", evt.target.value);
+   loadTheme();
+});
+
+const loadTheme = () => {
+
+   let theme = localStorage.getItem("theme");
+   console.log(theme);
+
+   if(theme == "dark"){
+      document.documentElement.dataset.bsTheme = "dark";
+   }
+   
+   else if(theme == "light"){
+      document.documentElement.dataset.bsTheme = "light";
+   }
+   
+}
+
+loadTheme();
 listNotes();
