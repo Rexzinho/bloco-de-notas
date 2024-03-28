@@ -23,6 +23,18 @@ addNote.addEventListener("click", (evt) => {
    notes.style.display = "none";
    modal.style.display = "block";
    addNote.style.display = "none";
+
+   let theme = localStorage.getItem("theme");
+
+   if(theme == "dark"){
+      document.querySelector("#input-title").style.color = "#ffffff";
+      colorInput.value = "#ffffff";
+   }
+   else if(theme == "light"){
+      document.querySelector("#input-title").style.color = "#000000";
+      colorInput.value = "#000000";
+   }
+
 });
 
 colorInput.addEventListener("input", () => {
@@ -37,11 +49,10 @@ btnCloseNote.addEventListener("click", (evt) => {
    document.querySelector("#input-id").value = "";
 
    let theme = localStorage.getItem("theme");
-   console.log(theme);
-
+   
    if(theme == "dark"){
-      colorInput.value = "#FFFFFF";
-      document.querySelector("#input-title").style.color = "#FFFFFF";
+      colorInput.value = "#ffffff";
+      document.querySelector("#input-title").style.color = "#ffffff";
    }
    else if(theme == "light"){
       colorInput.value = "#000000";
@@ -77,20 +88,24 @@ btnEditNote.addEventListener("click", (evt) => {
   let id = Number(document.querySelector("#input-id").value);
 
   notes.forEach(item => {
+
+      let theme = localStorage.getItem("theme");
+
      if(item.id == id){
       document.querySelector("#input-id").value = id;
       document.querySelector("#input-title").value = item.title;
 
       if(item.titleColor == "#000000" && theme == "dark"){
-         document.querySelector("#input-title").style.color = item.titleColor = "#FFFFFF";
-         olorInput.value = "#FFFFFF";
+         console.log("A");
+         document.querySelector("#input-title").style.color = "#ffffff";
+         colorInput.value = "#ffffff";
       }
-      else if(item.titleColor == "#FFFFFF" && theme == "light"){
-         document.querySelector("#input-title").style.color = item.titleColor = "#000000";
+      else if(item.titleColor == "#ffffff" && theme == "light"){
+         document.querySelector("#input-title").style.color = "#000000";
          colorInput.value = "#000000";
       }
       else{
-         document.querySelector("#input-title").style.color = item.titleColor = item.titleColor;
+         document.querySelector("#input-title").style.color = item.titleColor;
          colorInput.value = item.titleColor;
       }
 
@@ -185,8 +200,6 @@ const listNotes = () => {
      h1.innerText = item.title;
 
      let theme = localStorage.getItem("theme");
-
-     console.log(item.titleColor);
 
      if(item.titleColor == "#000000" && theme == "dark"){
       h1.style.color = "#ffffff";
@@ -340,6 +353,7 @@ const loadTheme = () => {
 
    notes.innerHTML = "";
    listNotes();
+
    
 }
 
