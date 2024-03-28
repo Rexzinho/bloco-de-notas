@@ -35,9 +35,21 @@ btnCloseNote.addEventListener("click", (evt) => {
    modal.style.display = "none";
    addNote.style.display = "block";
    document.querySelector("#input-id").value = "";
-   colorInput.value = "#000000";
+
+   let theme = localStorage.getItem("theme");
+   console.log(theme);
+
+   if(theme == "dark"){
+      colorInput.value = "#FFFFFF";
+      document.querySelector("#input-title").style.color = "#FFFFFF";
+   }
+   else if(theme == "light"){
+      colorInput.value = "#000000";
+      document.querySelector("#input-title").style.color = "#000000";
+   }
+
+   
    document.querySelector("#input-title").value = "";
-   document.querySelector("#input-title").style.color = "#000000";
    document.querySelector("#input-content").value = "";
    listNotes();
 })
@@ -68,8 +80,20 @@ btnEditNote.addEventListener("click", (evt) => {
      if(item.id == id){
       document.querySelector("#input-id").value = id;
       document.querySelector("#input-title").value = item.title;
-      document.querySelector("#input-title").style.color = item.titleColor;
-      colorInput.value = item.titleColor;
+
+      if(item.titleColor == "#000000" && theme == "dark"){
+         document.querySelector("#input-title").style.color = item.titleColor = "#FFFFFF";
+         olorInput.value = "#FFFFFF";
+      }
+      else if(item.titleColor == "#FFFFFF" && theme == "light"){
+         document.querySelector("#input-title").style.color = item.titleColor = "#000000";
+         colorInput.value = "#000000";
+      }
+      else{
+         document.querySelector("#input-title").style.color = item.titleColor = item.titleColor;
+         colorInput.value = item.titleColor;
+      }
+
       document.querySelector("#input-content").value = item.content;
      }
   });
@@ -159,7 +183,20 @@ const listNotes = () => {
 
      const h1 = document.createElement("h1");
      h1.innerText = item.title;
-     h1.style.color = item.titleColor;
+
+     let theme = localStorage.getItem("theme");
+
+     console.log(item.titleColor);
+
+     if(item.titleColor == "#000000" && theme == "dark"){
+      h1.style.color = "#ffffff";
+     }
+     else if(item.titleColor == "#ffffff" && theme == "light"){
+      h1.style.color = "#000000";
+     }
+     else{
+      h1.style.color = item.titleColor;
+     }
 
      const content = document.createElement("p");
      content.classList = "card-text";
@@ -211,7 +248,20 @@ const showNote = (note) => {
   addNote.style.display = "none";
   modalView.style.display = "block";
 
-  document.querySelector("#title-note").innerHTML = `<h1 style="color: ${note.titleColor}">${note.title}</h1>`;
+  let theme = localStorage.getItem("theme");
+  let color;
+
+  if(note.titleColor == "#000000" && theme == "dark"){
+   color = "#ffffff";
+  }
+  else if(note.titleColor == "#ffffff" && theme == "light"){
+   color = "#000000";
+  }
+  else{
+   color = note.titleColor;
+  }
+
+  document.querySelector("#title-note").innerHTML = `<h1 style="color: ${color}">${note.title}</h1>`;
   document.querySelector("#content-note").innerHTML = `<p>${note.content}</p>`;
 
   let lastTime = new Date(note.lastTime);
@@ -277,7 +327,6 @@ selectTheme.addEventListener("change", (evt) => {
 const loadTheme = () => {
 
    let theme = localStorage.getItem("theme");
-   console.log(theme);
 
    if(theme == "dark"){
       document.documentElement.dataset.bsTheme = "dark";
@@ -288,8 +337,23 @@ const loadTheme = () => {
       document.documentElement.dataset.bsTheme = "light";
       document.querySelector("#logo").classList = "";
    }
+
+   notes.innerHTML = "";
+   listNotes();
    
 }
 
+const setColor = () => {
+
+   let theme = localStorage.getItem("theme");
+
+   if(theme == "dark")
+      colorInput.value = "#ffffff";
+   
+   else if(theme == "light")
+      colorInput.value = "#000000";
+
+}
+
+setColor();
 loadTheme();
-listNotes();
