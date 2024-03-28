@@ -23,6 +23,7 @@ addNote.addEventListener("click", (evt) => {
    notes.style.display = "none";
    modal.style.display = "block";
    addNote.style.display = "none";
+   selectTheme.style.display = "none";
 
    let theme = localStorage.getItem("theme");
 
@@ -46,6 +47,7 @@ btnCloseNote.addEventListener("click", (evt) => {
    notes.style.display = "flex";
    modal.style.display = "none";
    addNote.style.display = "block";
+   selectTheme.style.display = "block";
    document.querySelector("#input-id").value = "";
 
    let theme = localStorage.getItem("theme");
@@ -83,6 +85,7 @@ btnEditNote.addEventListener("click", (evt) => {
   modal.style.display = "block";
   modalView.style.display = "none";
   addNote.style.display = "none";
+  selectTheme.style.display = "none";
 
   let notes = loadNotes();
   let id = Number(document.querySelector("#input-id").value);
@@ -259,6 +262,7 @@ const listNotes = () => {
 const showNote = (note) => {
   notes.style.display = "none";
   addNote.style.display = "none";
+  selectTheme.style.display = "none";
   modalView.style.display = "block";
 
   let theme = localStorage.getItem("theme");
@@ -289,6 +293,7 @@ closeModal.addEventListener("click", (evt) => {
    evt.preventDefault();
   modalView.style.display = "none";
   addNote.style.display = "block";
+  selectTheme.style.display = "block";
   notes.style.display = "flex";
   listNotes();
 })
@@ -297,6 +302,7 @@ closeModal.addEventListener("click", (evt) => {
 const closeWindow = () => {
   listNotes();
   addNote.style.display = "block";
+  selectTheme.style.display = "block";
   modalView.style.display = "none";
   notes.style.display = "flex";
 }
